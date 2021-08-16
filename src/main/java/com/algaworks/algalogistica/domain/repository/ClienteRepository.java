@@ -1,6 +1,7 @@
 package com.algaworks.algalogistica.domain.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,5 @@ import com.algaworks.algalogistica.domain.model.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> { // Estamos a dizer que repositorio é para cliente e que o id é do tipo Long
 	List<Cliente> findByNome(String nome);
 	List<Cliente> findByNomeContaining(String nome);
+	Optional<Cliente> findByEmail(String email);
 }

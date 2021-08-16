@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,9 +25,15 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Define a forma de geração do ids como o banco decide.
 	private Long id;
 	
+	@NotBlank//Nao deve estar nulo e vazio
 	@Column(name = "nome")
 	private String nome;
+	
+	@NotBlank
+	@Email //Tem que seguir a estrutura de um email
 	private String email;
+	
+	@NotBlank
 	private String telefone;
 	
 }
