@@ -1,0 +1,1 @@
+alter table cliente modify id bigint auto_increment;

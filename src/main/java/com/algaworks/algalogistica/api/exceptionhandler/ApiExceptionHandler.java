@@ -19,6 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.algaworks.algalogistica.api.exceptionhandler.model.ExceptionBody;
+import com.algaworks.algalogistica.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algalogistica.domain.exception.NegocioException;
 
 import lombok.AllArgsConstructor;
@@ -54,12 +55,23 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(NegocioException.class) //Dizendo ao Spring que deve tratar todas as excepcoes NegocioException com este metodo desta classse
 	public ResponseEntity<Object> handleNegocioException(NegocioException nex, WebRequest request){
-		
+		HttpStatus status = HttpStatus.BAD_REQUEST;
 		ExceptionBody exceptionBody = new ExceptionBody();
-		exceptionBody.setStatus(nex.getStatus().value());
+		exceptionBody.setStatus(status.value());
 		exceptionBody.setData(LocalDateTime.now());
 		exceptionBody.setTitulo(nex.getMessage());
 		
-		return handleExceptionInternal(nex, exceptionBody, new HttpHeaders(), nex.getStatus(), request);
+		return handleExceptionInternal(nex, exceptionBody, new HttpHeaders(), status, request);
+	}
+	
+	@ExceptionHandler(EntidadeNaoEncontradaException.class) //Dizendo ao Spring que deve tratar todas as excepcoes NegocioException com este metodo desta classse
+	public ResponseEntity<Object> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException nex, WebRequest request){
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		ExceptionBody exceptionBody = new ExceptionBody();
+		exceptionBody.setStatus(status.value());
+		exceptionBody.setData(LocalDateTime.now());
+		exceptionBody.setTitulo(nex.getMessage());
+		
+		return handleExceptionInternal(nex, exceptionBody, new HttpHeaders(), status, request);
 	}
 }

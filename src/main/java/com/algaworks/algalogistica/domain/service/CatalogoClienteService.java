@@ -2,7 +2,6 @@ package com.algaworks.algalogistica.domain.service;
 
 import javax.transaction.Transactional;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algalogistica.domain.exception.NegocioException;
@@ -40,6 +39,14 @@ public class CatalogoClienteService {
 		.anyMatch(c -> !c.equals(cliente));
 		
 		if(emUso)
-			throw new NegocioException("Este email já esta em uso!", HttpStatus.CONFLICT);
+			throw new NegocioException("Este email já esta em uso!");
+	}
+	
+	public Cliente findById(Long id) {
+		Cliente cliente = this.clienteRepository
+				.findById(id)
+				.orElseThrow(() -> new NegocioException("Cliente não foi cadastrado"));
+		
+		return cliente;
 	}
 }

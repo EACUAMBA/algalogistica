@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.algaworks.algalogistica.domain.ValidationGroup;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,6 +23,7 @@ import lombok.Setter;
 @Table(name = "cliente") //define esta classe com um nome diferente no banco de dados
 public class Cliente {
 	
+	@NotNull(groups = {ValidationGroup.ClienteId.class}) //Esta anotacao vai fazer com que valide apenas para o grpuo Cliente ID, se não for cliente id não ira funcionar.
 	@EqualsAndHashCode.Include // definindo que esta propriedade devera estar no equals e hash
 	@Id //defini este actibuto como chave primaria
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //Define a forma de geração do ids como o banco decide.
